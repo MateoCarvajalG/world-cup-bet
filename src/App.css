@@ -1,0 +1,78 @@
+@font-face {
+  font-family: 'Qatar2022';
+  src: local('Qatar2022'), url(./assets/fonts/Qatar2022-Bold.otf) format('truetype');
+}
+@font-face {
+  font-family: 'Qatar2022-Arabic-Medium';
+  src: local('Qatar2022-Arabic-Medium'), url(./assets/fonts/Qatar2022Arabic-Medium.otf) format('truetype');
+}
+.App{
+  width: 100vw;
+  min-height: 100vh;
+  background-color: #8b1638;
+  /* background-color: #020f2a; */
+
+  font-family: Qatar2022;
+}
+.container-podium{
+  background: url(./assets/podium.png) no-repeat bottom;
+  width: 75vw;
+  height: 60vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: auto;
+}
+.matches{
+  width: 100vw;
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.podium{
+  width: 18%;
+  color: #fff0a7;
+  font-weight: 900;
+  font-size: 30px;
+  line-height: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  font-size: 40px;
+}
+.container-match{
+  position: relative;
+  color: #81163b;
+  width: 20%;
+  min-width: 297px;
+  min-height: 297px;
+  margin: 0 2%;
+}
+.content-match{
+  position: absolute;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+.teams{
+  background-color: #eeeee4;
+  border-radius: .625rem;
+  display: flex;
+  align-content: center;
+  font-size: 1.5rem;
+  width: 80%;
+  text-align: center;
+  justify-content: space-between;
+}
+.teams .ant-input-number{
+  margin: auto !important;
+}
+
+
