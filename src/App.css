@@ -9,20 +9,56 @@
 .App{
   width: 100vw;
   min-height: 100vh;
-  background-color: #8b1638;
-  /* background-color: #020f2a; */
+  /* background-color: #8b1638; */
+  background-color: #020f2a;
 
   font-family: Qatar2022;
 }
-.container-podium{
-  background: url(./assets/podium.png) no-repeat bottom;
-  width: 75vw;
-  height: 60vh;
+.img-logo{
+  position: absolute;
+  top: 0;
+  width: 200px;
+}
+.container-podium-rank{
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  margin: auto;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
 }
+.container-podium{
+  background: url(./assets/podium.png) no-repeat bottom left;
+  background-size: 100%;
+  width: 40%;
+  height: 40vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: flex-end;
+  margin-left: 2%;
+}
+.container-fifa-rank{
+ width: 20%;
+ max-height: 400px;
+ overflow-y: scroll;
+}
+.container-fifa-rank .ant-table {
+  background: transparent !important;
+}
+.container-fifa-rank .ant-table-thead > tr > th {
+  background: transparent !important;
+}
+.container-fifa-rank .ant-table-tbody > tr > td {
+  border-bottom: none !important;
+}
+
+.container-fifa-rank .ant-table-tbody > tr.ant-table-row:hover > td, .ant-table-tbody > tr > td.ant-table-cell-row-hover {
+  background: #7d1030 !important;
+}
+.container-fifa-rank a {
+  color: white;
+  font-size: 20px;
+}
+
 .matches{
   width: 100vw;
   margin: auto;
@@ -33,15 +69,24 @@
 }
 .podium{
   width: 18%;
+  height: 75%;
   color: #fff0a7;
   font-weight: 900;
   font-size: 30px;
   line-height: 1;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
   font-size: 40px;
+}
+.podium:nth-child(1) , .podium:nth-child(3) {
+  height: 60%;
+}
+.selectPodium{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .container-match{
   position: relative;
@@ -75,4 +120,31 @@
   margin: auto !important;
 }
 
-
+.tabs-group .ant-tabs-tab {
+  color: rgba(255, 255, 255, 0.85) !important;
+  font-size: 23px;
+}
+.ant-modal-content{
+  font-family: Qatar2022 !important;
+}
+.ant-modal-content .modal-my-result{
+  width: 60%;
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  align-items: center;
+}
+.in-develop{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.in-develop h1{
+  color: white;
+}
+.in-develop img{
+  width: 480px;
+}
