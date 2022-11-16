@@ -6,12 +6,40 @@
   font-family: 'Qatar2022-Arabic-Medium';
   src: local('Qatar2022-Arabic-Medium'), url(./assets/fonts/Qatar2022Arabic-Medium.otf) format('truetype');
 }
+@font-face {
+  font-family: 'Qatar2022-Heavy';
+  src: local('Qatar2022-Heavy'), url(./assets/fonts/Qatar2022-Heavy.otf) format('truetype');
+}
+.login{
+  min-height: 100vh;
+  background-color: #eeeee5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  font-family: Qatar2022;
+
+}
+.img-logo-login{
+  width: 30%;
+}
+.login h1{
+  font-family: Qatar2022-Heavy;
+  color: #550065;
+  font-size: 2rem;
+}
+.form-login{
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .App{
   width: 100vw;
   min-height: 100vh;
   /* background-color: #8b1638; */
   background-color: #020f2a;
-
+  
   font-family: Qatar2022;
 }
 .img-logo{
