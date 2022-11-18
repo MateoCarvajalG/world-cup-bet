@@ -1,9 +1,13 @@
 import 'antd/dist/antd.css'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import {InputNumber,Modal } from 'antd';
 import { User } from '../mockups/User.mockup';
+import { AuthContext } from '../context/AuthContext';
 
 function Match(props:any) {
+  const {auth} = useContext(AuthContext);
+  const {matchesResults} = auth
+
   const {results} = User
   const [localScore, setLocalStore] = useState(0)
   const [visitorScore, setVisitorScore] = useState(0)
@@ -22,7 +26,11 @@ function Match(props:any) {
   const onChangeSelect = (value:any) => {
     console.log('changed', value);
   };
-  
+  useEffect( () => {
+    const resultMatch = matchesResults.find(match=> match._id === props.match._id )
+    setLocalStore(resultMatch?.local_score)
+    setVisitorScore(resultMatch?.visitor_score)
+  }, [])
   
   return (
     <>
@@ -37,7 +45,9 @@ function Match(props:any) {
               size="middle"
               min={0} 
               max={100000} 
-              defaultValue={User.results[props.match._id] ? User.results[props.match._id].local_score:0} 
+              defaultValue={localScore !== undefined ? localScore : -1}
+              // defaultValue={localScore}
+              status = {visitorScore !== undefined ? '' : 'error'}
               onChange={onChangeSelect} 
             />
           </div>
@@ -51,7 +61,8 @@ function Match(props:any) {
               size="middle" 
               min={0} 
               max={100000} 
-              defaultValue={User.results[props.match._id] ? User.results[props.match._id].visitor_score:0} 
+              defaultValue={visitorScore !== undefined ? visitorScore : -1} 
+              status = {visitorScore !== undefined ? '' : 'error'}
               onChange={onChangeSelect} 
             />
           </div>

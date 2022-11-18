@@ -7,14 +7,10 @@ import {  Button, Checkbox, Form, Input  } from 'antd';
 
 function LoginPage() {
   let navigate = useNavigate();
-  let location = useLocation();
   const { signin } = useContext(AuthContext);
 
   const onFinish = async(values:any) => {
-    const data = await signin(values)
-    if(data.token){
-      navigate('/game',{replace:true})
-    }
+    const res = await signin(values)
   };
   const onFinishFailed = (errorInfo:any) => {
     console.log('Failed:', errorInfo);

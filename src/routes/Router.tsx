@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from "react";
+import {  useContext  } from "react";
 import { 
     Routes,
     Route,
@@ -8,38 +8,31 @@ import {
     Navigate,
     Outlet}
 from "react-router-dom";
-import LoginPage from "../components/LoginPage";
 import { AuthContext } from "../context/AuthContext";
-import Game from "../views/Game";
+import { PrivateRoute } from "./PrivateRoute";
+import { PublicRoute } from "./PublicRoute";
 
 const Paths = () => {
+  const {auth, verificaToken} = useContext(AuthContext);
+
   return (
     <Routes>
-      <Route path="/login" element={<LoginPage />} />
       <Route
-      path="/game"
-      element={
-          <RequireAuth>
-            <Game/>
-          </RequireAuth>
-      }
+        path="/auth/*"
+        element={<PublicRoute isAuthenticated={auth.logged} />}
       />
+      <Route
+        path="/"
+        element={<PrivateRoute isAuthenticated={auth.logged} />}
+      />
+      <Route
+        path="*"
+        element={<Navigate to="/" />}  
+      />
+    
     </Routes>
   );
 };
-
-
-function RequireAuth({ children }: { children: JSX.Element }) {
-  const { user } = useContext(AuthContext);
-  let location = useLocation();
-
-  if (!user) {
-    
-    return <Navigate to="/login" state={{ from: location }} replace />;
-  }
-
-  return children;
-}
 
 export default Paths;
 

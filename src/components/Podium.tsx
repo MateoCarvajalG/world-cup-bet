@@ -1,14 +1,16 @@
 import 'antd/dist/antd.css'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import {Select } from 'antd'; 
-import { User } from '../mockups/User.mockup';
+import { AuthContext } from '../context/AuthContext';
 
 function Podium(props:any) {
 
-  const [imageSecond,setImageSecond] = useState(User.selected_teams['runner_up'])
-  const [imageFirts,setImageFirts] = useState(User.selected_teams['champion'])
-  const [imageThird,setImageThird] = useState(User.selected_teams['third_place'])
+  const {auth} = useContext(AuthContext);
 
+  const [imageSecond,setImageSecond] = useState(auth.selectedTeams['runner_up'])
+  const [imageFirts,setImageFirts] = useState(auth.selectedTeams['champion'])
+  const [imageThird,setImageThird] = useState(auth.selectedTeams['third_place'])
+  const [disabledInput,setDisabledInput] =  useState(new Date() > new Date("nov 25 2022 0:00") )
 
   const handleChangeSecond = (value:any) => {
     setImageSecond(value)
@@ -35,12 +37,12 @@ function Podium(props:any) {
               onChange={handleChangeSecond}
               options={props.teamsSelect}
               showSearch
-              defaultValue={User.selected_teams['runner_up']}
+              defaultValue={auth.selectedTeams['runner_up']}
               optionFilterProp="children"
-              filterOption={(input, option) =>
+              filterOption={(input, option:any) =>
                 (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
               }
-              // disabled
+              disabled={disabledInput}
             />
             <b>2</b>
           </div>
@@ -55,11 +57,12 @@ function Podium(props:any) {
               onChange={handleChangeFirst}
               options={props.teamsSelect}
               showSearch
-              defaultValue={User.selected_teams['champion']}
+              defaultValue={auth.selectedTeams['champion']}
               optionFilterProp="children"
-              filterOption={(input, option) =>
+              filterOption={(input, option:any) =>
                 (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
               }
+              disabled={disabledInput}
             />
             <b>1</b>
           </div>
@@ -74,11 +77,12 @@ function Podium(props:any) {
               onChange={handleChangeThird}
               options={props.teamsSelect}
               showSearch
-              defaultValue={User.selected_teams['third_place']}
+              defaultValue={auth.selectedTeams['third_place']}
               optionFilterProp="children"
-              filterOption={(input, option) =>
+              filterOption={(input, option:any) =>
                 (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
               }
+              disabled={disabledInput}
             />
             <b>3</b>
           </div>
