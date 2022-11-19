@@ -35,12 +35,17 @@
   align-items: center;
 }
 .App{
-  width: 100vw;
   min-height: 100vh;
   /* background-color: #8b1638; */
   background-color: #020f2a;
   
   font-family: Qatar2022;
+}
+.content-header{
+  background: #8b1638;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-evenly;
 }
 .img-logo{
   position: absolute;
@@ -65,9 +70,10 @@
   margin-left: 2%;
 }
 .container-fifa-rank{
- width: 20%;
- max-height: 400px;
- overflow-y: scroll;
+ width: 50%;
+ margin: auto;
+ display: flex;
+ flex-direction: column;
 }
 .container-fifa-rank .ant-table {
   background: transparent !important;
@@ -86,9 +92,10 @@
   color: white;
   font-size: 20px;
 }
-
+.fifa-logo{
+  margin: auto;
+}
 .matches{
-  width: 100vw;
   margin: auto;
   display: flex;
   flex-direction: row;
@@ -147,7 +154,19 @@
 .teams .ant-input-number{
   margin: auto !important;
 }
-
+.container-list-all-matches .ant-table{
+  background: transparent !important;
+  color: white;
+}
+.container-list-all-matches .ant-table-thead > tr > th {
+  background: transparent !important;
+}
+.container-list-all-matches .ant-table-tbody > tr > td {
+  border-bottom: none !important;
+}
+.container-list-all-matches .ant-table-thead > tr > th{
+  color: white;
+}
 .tabs-group .ant-tabs-tab {
   color: rgba(255, 255, 255, 0.85) !important;
   font-size: 23px;
@@ -175,4 +194,10 @@
 }
 .in-develop img{
   width: 480px;
+}
+@media (max-width:650px) {
+  .container-fifa-rank{
+    width: 100%;
+  }
+  
 }

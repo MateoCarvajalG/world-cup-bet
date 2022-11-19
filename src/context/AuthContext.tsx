@@ -1,4 +1,5 @@
 import React,{ useState } from "react";
+import useAuthState from "../hooks/useAuthState";
 import { authService } from "../services/auth.service";
 export const AuthContext = React.createContext<any>(null!);
 
@@ -48,35 +49,7 @@ interface AuthContextType {
 
 export const  AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
 
-  let [auth, setAuth] = React.useState<IUserInfo>(initialState);
-  const service = new authService()
+ const authState  = useAuthState()
 
-  let signin = async (Credentials: string) => {
-    try {
-      const resp = await service.signIn(Credentials)
-      if(resp!.status === 200) {
-        const {token,names,score,selected_teams,matches_results,logged} = resp!.data
-        localStorage.setItem('token', token);
-        setAuth({
-          checking: false,
-          logged: true,
-          names: names,
-          score:score,
-          selectedTeams:selected_teams,
-          matchesResults:matches_results
-        })
-        return {ok:true}
-      }
-    } catch (error) {
-      return {ok:false}
-    }
-  };
-
-  let signout = () => {
-    service.signOut()
-  };
-
-  let value = { auth, signin, signout };
-
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
+  return <AuthContext.Provider value={authState}>{children}</AuthContext.Provider>
 }

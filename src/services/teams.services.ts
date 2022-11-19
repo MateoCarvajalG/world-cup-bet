@@ -36,7 +36,7 @@ export class teamsService {
   }
 
   getMatchesByGroup(group:string){
-    console.log('entrooo')
     return this.matches.filter((match:any)=>match.group === group)
   }
+
 }
