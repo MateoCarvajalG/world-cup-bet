@@ -11,7 +11,9 @@ interface IPodium{
     visitor_score : number | null
   }
   interface IUserInfo{
+    token: string | null,
     names: string | null,
+    document: string | null,
     score : string | null,
     selectedTeams: IPodium,
     matchesResults: IMatchResult[] | undefined
@@ -20,7 +22,9 @@ interface IPodium{
     logged: boolean
   }
 const initialState:IUserInfo={
+    token : null,
     names : null,
+    document: null,
     score : null,
     selectedTeams: {
       champion    : null,
@@ -61,14 +65,16 @@ const useAuthState = () => {
     try {
       const resp = await service.signIn(Credentials)
       if(resp!.status === 200) {
-        const {token,names,score,selected_teams,matches_results,logged} = resp!.data
+        const {token,names,document,score,selected_teams,matches_results,logged} = resp!.data
         localStorage.setItem('token', token);
         authDispatch({
             type:"LOGIN",
             payload: {
+              token: token,
               checking: false,
               logged: true,
               names: names,
+              document:document,
               score:score,
               selectedTeams:selected_teams,
               matchesResults:matches_results
@@ -84,11 +90,17 @@ const useAuthState = () => {
   let signout = () => {
     service.signOut()
   };
+
+  let signUp = async (userData:any)=>{
+      const resp = await service.signUp(userData)
+      return resp
+  }
   return {
     auth,
     authDispatch,
     signin,
-    signout
+    signout,
+    signUp
   };
 };
 

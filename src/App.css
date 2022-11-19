@@ -38,6 +38,7 @@
   min-height: 100vh;
   /* background-color: #8b1638; */
   background-color: #020f2a;
+  min-width: 320px;
   
   font-family: Qatar2022;
 }
@@ -196,8 +197,27 @@
   width: 480px;
 }
 @media (max-width:650px) {
+  .login {
+    justify-content: center;
+  }
+  .form-login {
+    width: 90%;
+  }
+    .img-logo-login {
+  width: 80%;
+  }
   .container-fifa-rank{
     width: 100%;
   }
+  .img-logo{
+    display: none;
+  }
   
+}
+
+@media (max-width:850px) {
+  .container-podium{
+    height: 230px;
+    width: 100%;
+  }
 }

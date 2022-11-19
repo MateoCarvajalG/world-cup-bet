@@ -23,11 +23,11 @@ function Game() {
 
 
   const getTeams =async ()=>{
-    setTeams(await (await service.getTeams()).teams)
-    setTeamsSelect(await (await service.getTeams()).teamsSelect)
+    setTeams(await (await service.getTeams(auth.token)).teams)
+    setTeamsSelect(await (await service.getTeams(auth.token)).teamsSelect)
   }
   const getMatches = ()=>{
-    service.getMatches().then(()=>{
+    service.getMatches(auth.token).then(()=>{
       setMatches( service.getMatchesByGroup('A'))
     })
   }
@@ -44,7 +44,7 @@ function Game() {
   }, [])
   
   const listMatches = matches.map((match:any,index:any) =>  {
-    return <Match forceRender={true} key={index} match={match}/>
+    return <Match forceRender={true} key={index} match={match} service={service}/>
   });
 
   const items = [
@@ -89,7 +89,7 @@ function Game() {
     <div className="App">
       <Header className='content-header'>
         <h1>{auth.names}</h1>
-        <h2>400pts</h2>
+        <h2>{auth.score} puntos</h2>
       </Header>
       <img src={logoworldcup} alt="" className='img-logo'/>
       <div className='container-podium-rank'>

@@ -23,7 +23,6 @@ function Match(props:any) {
 
   useEffect( () => {
     setResultMatch(auth.matchesResults.find((match:any)=> match._id === props.match._id ))
-    console.log('semonto')
   },[])
   
   
@@ -48,13 +47,16 @@ function Match(props:any) {
                 status = {localScore !== undefined ? '' : 'error'}
                 onChange={(ev:any)=>{
                   setLocalStore(ev)
+                  const payload={
+                    _id: props.match._id,
+                    local_score: ev,
+                    visitor_score:visitorScore
+                  }
+                  props.service.updateMatch(auth.token,auth.document,props.match._id,payload)
                   authDispatch({
                     type:"UPDATE_MATCH",
-                    payload:{
-                      _id: props.match._id,
-                      local_score: ev,
-                      visitor_score:visitorScore
-                    }
+                    payload
+                    
                   })
                 }} 
               />
@@ -73,13 +75,15 @@ function Match(props:any) {
               status = {visitorScore !== undefined ? '' : 'error'}
               onChange={(ev:any)=>{
                 setVisitorScore(ev)
+                const payload={
+                  _id: props.match._id,
+                  local_score: localScore,
+                  visitor_score:ev
+                }
+                props.service.updateMatch(auth.token,auth.document,props.match._id,payload)
                 authDispatch({
                   type:"UPDATE_MATCH",
-                  payload:{
-                    _id: props.match._id,
-                    local_score: localScore,
-                    visitor_score:ev
-                  }
+                  payload
                 })
               }}  
               />

@@ -11,12 +11,15 @@ export class authService {
   }
   async signIn(credentials:any){
       const data = await this.Api.post('/api/v1/auth/login',credentials)
-      console.log(data.data)
       return data
   }
 
   signOut(){
 
+  }
+  async signUp(userData:any){
+    const data = await this.Api.post('/api/v1/users',userData)
+    return data
   }
   
 }

@@ -1,4 +1,5 @@
 import axios from "axios";
+import Match from "../components/Match";
 
 
 
@@ -13,9 +14,11 @@ export class teamsService {
   constructor() {
   }
   
-  async getTeams() {
+  async getTeams(token:string) {
     const dataTeams = await this.Api.get('/api/v1/teams', {
-        headers: {}
+        headers: {
+          'Authorization': 'Bearer ' + token
+        }
       })
       this.teams = dataTeams.data
       dataTeams.data.forEach((team: any) => {
@@ -28,15 +31,32 @@ export class teamsService {
     return this.teams.filter((team:any) => team._id === teamId)[0]
   }
 
-  async getMatches(){
+  async getMatches(token:string){
     const dataMatches = await this.Api.get('/api/v1/matches', {
-      headers: {}
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
     })
     this.matches = dataMatches.data
   }
 
   getMatchesByGroup(group:string){
     return this.matches.filter((match:any)=>match.group === group)
+  }
+
+  async updateMatch(token:string,UserId:string,MatchId:string,scores:any){
+    console.log('entro a actualizar el partido',MatchId)
+    const data = await this.Api.patch(`/api/v1/users/${UserId}/matches/${MatchId}`,
+    {
+      local_score : scores.local_score ? scores.local_score : 0,
+      visitor_score:scores.visitor_score ? scores.visitor_score : 0
+    },
+    {
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    })
+    console.log(data)
   }
 
 }

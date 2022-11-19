@@ -1,13 +1,23 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import 'antd/dist/antd.css'
 import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import {  Button, Checkbox, Form, Input  } from 'antd';
+import {  Button, Checkbox, Form, Input, Modal  } from 'antd';
+import ModalUserRegister from "./ModalUserRegister";
 
 
 function LoginPage() {
   let navigate = useNavigate();
   const { signin } = useContext(AuthContext);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
 
   const onFinish = async(values:any) => {
     const res = await signin(values)
@@ -23,7 +33,6 @@ function LoginPage() {
       <img src="https://q22b2ctemplates.blob.core.windows.net/dev/images/q22.svg" className="img-logo-login" alt="" />
       <div className="form-login">
         <h1>Ingresa con tu documento de identidad</h1>
-
         <Form
           name="basic"
           labelCol={{
@@ -33,9 +42,6 @@ function LoginPage() {
             span: 16,
           }}
           size="large"
-          initialValues={{
-            remember: true,
-          }}
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
           autoComplete="off"
@@ -67,12 +73,20 @@ function LoginPage() {
           </Form.Item>
           <Form.Item>
             <Button type="primary" htmlType="submit">
-              Log in
+              Ingresar
+            </Button>
+
+
+            <Button type="link" onClick={()=>setIsModalOpen(true)}>
+              Registrarse
             </Button>
           </Form.Item>
         </Form>
 
       </div>
+      <Modal footer={[]} title="Detalle del partido" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+        <ModalUserRegister setIsModalOpen={setIsModalOpen}/>
+      </Modal>
     </div>
   );
 }
