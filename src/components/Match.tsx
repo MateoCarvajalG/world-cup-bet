@@ -44,6 +44,7 @@ function Match(props:any) {
                 min={0} 
                 max={100000} 
                 value={localScore}
+                disabled={new Date > new Date(props.match.date)}
                 status = {localScore !== undefined ? '' : 'error'}
                 onChange={(ev:any)=>{
                   setLocalStore(ev)
@@ -73,6 +74,7 @@ function Match(props:any) {
               max={100000} 
               value={visitorScore} 
               status = {visitorScore !== undefined ? '' : 'error'}
+              disabled={new Date > new Date(props.match.date)}
               onChange={(ev:any)=>{
                 setVisitorScore(ev)
                 const payload={

@@ -56,7 +56,7 @@ function Game() {
     { label: 'Grupo F', key: 'F', children: <div className='matches'>{listMatches}</div> },
     { label: 'Grupo G', key: 'G', children: <div className='matches'>{listMatches}</div> },
     { label: 'Grupo H', key: 'H', children: <div className='matches'>{listMatches}</div> },
-    { label: 'Todos los partidos', key: 'all', children: <div className='matches'><AllMatches AllMatches={service.matches}/></div> },
+    { label: 'Todos los partidos', key: 'all', children: <div className='matches'><AllMatches  service={service}/></div> },
 
   ];
   const tabsRank=[

@@ -22,14 +22,17 @@ function AllMatches(props:any) {
                 min={0} 
                 max={100000} 
                 value={auth.matchesResults.find((match:any)=> match._id === text._id)?.local_score}
+                disabled={new Date() > new Date(text.date)}
                 onChange={(ev:any)=>{
+                  const payload={
+                    _id: text._id,
+                    local_score: `${ev}`,
+                    visitor_score:auth.matchesResults.find((match:any)=> match._id === text._id)?.visitor_score
+                  }
+                  props.service.updateMatch(auth.token,auth.document,text._id,payload)
                   authDispatch({
                     type:"UPDATE_MATCH",
-                    payload:{
-                      _id: text._id,
-                      local_score: `${ev}`,
-                      visitor_score:auth.matchesResults.find((match:any)=> match._id === text._id)?.visitor_score
-                    }
+                    payload
                   })
                 }} 
               />
@@ -48,15 +51,18 @@ function AllMatches(props:any) {
                 min={0} 
                 max={100000} 
                 value={auth.matchesResults.find((match:any)=> match._id === text._id)?.visitor_score}
+                disabled={new Date() > new Date(text.date)}
                 onChange={(ev:any)=>{
+                  const  payload={
+                    _id: text._id,
+                    local_score: auth.matchesResults.find((match:any)=> match._id === text._id)?.local_score,
+                    visitor_score:`${ev}`
+                  }
                   setLocalStore(ev)
+                  props.service.updateMatch(auth.token,auth.document,text._id,payload)
                   authDispatch({
                     type:"UPDATE_MATCH",
-                    payload:{
-                      _id: text._id,
-                      local_score: auth.matchesResults.find((match:any)=> match._id === text._id)?.local_score,
-                      visitor_score:`${ev}`
-                    }
+                    payload
                   })
                 }} 
             />
@@ -75,7 +81,7 @@ function AllMatches(props:any) {
 
 
   useEffect(() => {
-    setMatchesSorted(props.AllMatches.slice().sort((a:any,b:any)=> new Date(a.date).valueOf() - new Date(b.date).valueOf()))
+    setMatchesSorted(props.service.matches.slice().sort((a:any,b:any)=> new Date(a.date).valueOf() - new Date(b.date).valueOf()))
   }, [])
 
   return (
