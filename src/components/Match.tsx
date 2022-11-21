@@ -1,7 +1,8 @@
 import 'antd/dist/antd.css'
 import { useContext, useEffect, useState } from 'react'
-import {InputNumber,Modal } from 'antd';
+import {InputNumber,Modal, notification } from 'antd';
 import { AuthContext } from '../context/AuthContext';
+import { showError } from '../alerts';
 
 function Match(props:any) {
   const {auth,authDispatch} = useContext(AuthContext);
@@ -53,11 +54,18 @@ function Match(props:any) {
                     local_score: ev,
                     visitor_score:visitorScore
                   }
-                  props.service.updateMatch(auth.token,auth.document,props.match._id,payload)
-                  authDispatch({
-                    type:"UPDATE_MATCH",
-                    payload
-                    
+                  props.service.updateMatch(auth.token,auth.document,props.match._id,payload).then((res:any)=>{
+                    authDispatch({
+                      type:"UPDATE_MATCH",
+                      payload
+                      
+                    })
+                  }).catch((err:any)=>{
+                    notification.error({
+                      message: 'Error',
+                      description:
+                        showError(err.response),
+                    });
                   })
                 }} 
               />
@@ -82,10 +90,17 @@ function Match(props:any) {
                   local_score: localScore,
                   visitor_score:ev
                 }
-                props.service.updateMatch(auth.token,auth.document,props.match._id,payload)
-                authDispatch({
-                  type:"UPDATE_MATCH",
-                  payload
+                props.service.updateMatch(auth.token,auth.document,props.match._id,payload).then((res:any)=>{
+                  authDispatch({
+                    type:"UPDATE_MATCH",
+                    payload
+                  })
+                }).catch((err:any)=>{
+                  notification.error({
+                    message: 'Error',
+                    description:
+                      showError(err.response),
+                  });
                 })
               }}  
               />

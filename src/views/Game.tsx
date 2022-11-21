@@ -9,6 +9,7 @@ import { teamsService } from '../services/teams.services';
 import logoworldcup from '../assets/world-cup-2022-logo.svg'
 import { AuthContext } from '../context/AuthContext';
 import AllMatches from '../components/AllMatches';
+import UsersRank from '../components/UsersRank';
 
 const {Header} = Layout
 function Game() {
@@ -61,11 +62,7 @@ function Game() {
   ];
   const tabsRank=[
     { label: 'Fifa', key: 'fifa', children: <FifaRank teams={teams} /> }, // remember to pass the key prop
-    { label: 'Participantes', key: 'players', children:
-    <div className='in-develop'>
-      <h1>En desarrollo</h1>
-      <img src="https://media4.giphy.com/media/qgQUggAC3Pfv687qPC/giphy.gif" alt="" />
-    </div>  
+    { label: 'Participantes', key: 'players', children: <UsersRank service={service}/>
     },
 
   ]

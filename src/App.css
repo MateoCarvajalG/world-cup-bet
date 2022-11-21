@@ -165,7 +165,7 @@
 .container-list-all-matches .ant-table-tbody > tr > td {
   border-bottom: none !important;
 }
-.container-list-all-matches .ant-table-thead > tr > th{
+.ant-table-thead > tr > th{
   color: white;
 }
 .tabs-group .ant-tabs-tab {

@@ -45,7 +45,6 @@ export class teamsService {
   }
 
   async updateMatch(token:string,UserId:string,MatchId:string,scores:any){
-    console.log('entro a actualizar el partido',MatchId)
     const data = await this.Api.patch(`/api/v1/users/${UserId}/matches/${MatchId}`,
     {
       local_score : scores.local_score ? scores.local_score : 0,
@@ -56,7 +55,26 @@ export class teamsService {
         'Authorization': 'Bearer ' + token
       }
     })
-    console.log(data)
+  }
+  async getRankUsers(token:string){
+    const data = await this.Api.get(`/api/v1/users`,
+    {
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    })
+    return data.data
+  }
+
+  async updatePodium(token:string,userId:string,dataUpdate:any){
+    const data = await this.Api.patch(`/api/v1/users/${userId}`,
+    dataUpdate,
+    {
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    })
+    return data.data
   }
 
 }

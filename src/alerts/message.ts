@@ -1,6 +1,8 @@
 
 const ERRORS:any = {
+    40001: 'Usuario o contraseña invalido',
     40003: 'El usuario ya existe',
+    42301: 'El partido ya inicio y no es posible modificarlo'
 }
 
 function getErrorMessage(error:any) {

@@ -14,12 +14,33 @@ function Podium(props:any) {
 
   const handleChangeSecond = (value:any) => {
     setImageSecond(value)
+    props.service.updatePodium(auth.token,auth.document,{
+      "runner_up" : value
+    }).then((res:any)=>{
+      console.log(res)
+    }).catch((err:any)=>{
+      console.log(err)
+    })
   };
   const handleChangeFirst = (value:any) => {
     setImageFirts(value)
+    props.service.updatePodium(auth.token,auth.document,{
+      "champion" : value
+    }).then((res:any)=>{
+      console.log(res)
+    }).catch((err:any)=>{
+      console.log(err)
+    })
   };
   const handleChangeThird = (value:any) => {
     setImageThird(value)
+    props.service.updatePodium(auth.token,auth.document,{
+      "third_place" : value
+    }).then((res:any)=>{
+      console.log(res)
+    }).catch((err:any)=>{
+      console.log(err)
+    })
     
   };
   

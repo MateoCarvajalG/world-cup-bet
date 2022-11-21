@@ -101,7 +101,7 @@ function ModalUserRegister(props:any) {
               required: true,
               message: 'Introduzca una contraseña segura',
               },
-              { type: 'string', min: 3,message:" La contraseña debe tener como minimo 8 caracteres"}, 
+              { type: 'string', min: 8,message:" La contraseña debe tener como minimo 8 caracteres"}, 
               { type: 'string', max: 30,message:"La contraseña debe tener como maximo 30 caracteres "}, 
               { pattern:/^[a-zA-ZÀ-ÿ \\u00f1 \\u00d1 \\s 0-9]+$/,message:"La contraseña no puede tener caracteres especiales"}
 

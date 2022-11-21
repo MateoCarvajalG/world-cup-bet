@@ -62,7 +62,6 @@ const useAuthState = () => {
   const service = new authService()
   
   let signin = async (Credentials: string) => {
-    try {
       const resp = await service.signIn(Credentials)
       if(resp!.status === 200) {
         const {token,names,document,score,selected_teams,matches_results,logged} = resp!.data
@@ -82,9 +81,7 @@ const useAuthState = () => {
         })
         return {ok:true}
       }
-    } catch (error) {
-      return {ok:false}
-    }
+    
   };
   
   let signout = () => {

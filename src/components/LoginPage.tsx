@@ -2,8 +2,9 @@ import { useContext, useState } from "react";
 import 'antd/dist/antd.css'
 import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import {  Button, Checkbox, Form, Input, Modal  } from 'antd';
+import {  Button, Checkbox, Form, Input, Modal, notification  } from 'antd';
 import ModalUserRegister from "./ModalUserRegister";
+import { showError } from "../alerts";
 
 
 function LoginPage() {
@@ -19,14 +20,19 @@ function LoginPage() {
     setIsModalOpen(false);
   };
 
-  const onFinish = async(values:any) => {
-    const res = await signin(values)
+  const onFinish = (values:any) => { 
+    signin(values).then((res:any)=>{
+    }).catch((err:any)=>{
+      notification.error({
+        message: 'Error',
+        description:
+          showError(err.response),
+      });
+    })
   };
   const onFinishFailed = (errorInfo:any) => {
     console.log('Failed:', errorInfo);
   };
-
-  
 
   return (
     <div className="login">
