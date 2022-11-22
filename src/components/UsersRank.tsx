@@ -6,25 +6,25 @@ import { AuthContext } from '../context/AuthContext';
 function UsersRank(props:any) {
   const {auth} = useContext(AuthContext);
   const [data,setData]= useState()
-    const columns = [
-        {
-          title : 'Nombre',
-          dataIndex: 'names',
-          key: 'names',
-          render: (text:any) => <a>{text}</a>
-        },
-        { 
-          title:"Puntaje",
-          dataIndex: 'score',
-          key: 'score',
-          render: (text:any) => <a>{text}</a>
-        },
-        // {
-        //   dataIndex: 'name',
-        //   key: 'name',
-        //   render: (text:any) => <a>{text}</a>  
-        // },
-      ];
+  const columns = [
+      {
+        title : 'Nombre',
+        dataIndex: 'names',
+        key: 'names',
+        render: (text:any) => <a>{text}</a>
+      },
+      { 
+        title:"Puntaje",
+        dataIndex: 'score',
+        key: 'score',
+        render: (text:any) => <a>{text}</a>
+      },
+      // {
+      //   dataIndex: 'name',
+      //   key: 'name',
+      //   render: (text:any) => <a>{text}</a>  
+      // },
+    ];
 
   const getRankUser= async()=>{
     const data = await props.service.getRankUsers(auth.token)

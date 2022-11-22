@@ -77,4 +77,14 @@ export class teamsService {
     return data.data
   }
 
+  async getUsersResultsByMatchId(token:string,matchId:string){
+    const data = await this.Api.get(`/api/v1/users/matches/${matchId}`,
+    {
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    })
+    return data.data
+  }
+
 }
