@@ -87,4 +87,9 @@ export class teamsService {
     return data.data
   }
 
+  async updateScoreMatch(token:string,payload:any){
+    console.log(token, payload,'desde clasee')
+  }
+  
+
 }

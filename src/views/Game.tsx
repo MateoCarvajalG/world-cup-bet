@@ -10,6 +10,7 @@ import logoworldcup from '../assets/world-cup-2022-logo.svg'
 import { AuthContext } from '../context/AuthContext';
 import AllMatches from '../components/AllMatches';
 import UsersRank from '../components/UsersRank';
+import UpdateResultsMatches from './UpdateResults';
 
 const {Header} = Layout
 function Game() {
@@ -21,7 +22,7 @@ function Game() {
   const [teamsSelect,setTeamsSelect] = useState()
   const [matches,setMatches] = useState([])
   const [group,setGroup] = useState('A')
-
+  const [test,setTest]= useState(true)
 
   const getTeams =async ()=>{
     setTeams(await (await service.getTeams(auth.token)).teams)
@@ -62,25 +63,35 @@ function Game() {
   ];
   const tabsRank=[
     { label: 'Fifa', key: 'fifa', children: <FifaRank teams={teams} /> }, // remember to pass the key prop
-    { label: 'Participantes', key: 'players', children: <UsersRank service={service}/>
-    },
-
+    { label: 'Participantes', key: 'players', children: <UsersRank service={service}/>},
   ]
   const itemsB = [
-    { label: 'Fase de grupos', key: 'groups', children: <Tabs destroyInactiveTabPane={true} className='tabs-group' onChange={onChangeTabGroup} items={items}/> }, // remember to pass the key prop
-    { label: 'Fase Final', key: 'Finals', children: 
-      <div className='in-develop'>
-        <h1>En desarrollo</h1>
-        <img src="https://media4.giphy.com/media/qgQUggAC3Pfv687qPC/giphy.gif" alt="" />
-      </div>  
-    },
-    { label: 'Clasificacion', key: 'clasifieds', children: <Tabs className='tabs-group' onChange={onChangeRank} items={tabsRank}/>},
-
+    ...(auth.document === "1053845913" || auth.document === "1053850398" ?
+      [{ label: 'Fase de grupos', key: 'groups', children: <Tabs destroyInactiveTabPane={true} className='tabs-group' onChange={onChangeTabGroup} items={items}/> }, // remember to pass the key prop
+      { label: 'Fase Final', key: 'Finals', children: 
+        <div className='in-develop'>
+          <h1>En desarrollo</h1>
+          <img src="https://media4.giphy.com/media/qgQUggAC3Pfv687qPC/giphy.gif" alt="" />
+        </div>  
+      },
+      { label: 'Clasificacion', key: 'clasifieds', children: <Tabs className='tabs-group' onChange={onChangeRank} items={tabsRank}/>},
+      { label: 'Actualizacion', key: 'updateResult', children: <div className='matches'> <UpdateResultsMatches service={service}/> </div> }]
+      :
+      [{ label: 'Fase de grupos', key: 'groups', children: <Tabs destroyInactiveTabPane={true} className='tabs-group' onChange={onChangeTabGroup} items={items}/> }, // remember to pass the key prop
+      { label: 'Fase Final', key: 'Finals', children: 
+        <div className='in-develop'>
+          <h1>En desarrollo</h1>
+          <img src="https://media4.giphy.com/media/qgQUggAC3Pfv687qPC/giphy.gif" alt="" />
+        </div>  
+      },
+      { label: 'Clasificacion', key: 'clasifieds', children: <Tabs className='tabs-group' onChange={onChangeRank} items={tabsRank}/>},]
+      )  
   ];
 
   const onChangeB = (key:any) => {
     console.log(key)
   };
+  
  
   return (
     <div className="App">

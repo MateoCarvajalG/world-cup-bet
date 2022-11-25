@@ -64,7 +64,6 @@ function Match(props:any) {
 
     
     if(typeof localScore ==='number' && typeof visitorScore === 'number' && has_played){
-      console.log('entrooo')
       if(local_team.result > visiting_team.result && localScore > visitorScore ){
         console.log('entro a ganador local')
         sum += 3 
