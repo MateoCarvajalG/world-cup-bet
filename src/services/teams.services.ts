@@ -88,7 +88,17 @@ export class teamsService {
   }
 
   async updateScoreMatch(token:string,payload:any){
-    console.log(token, payload,'desde clasee')
+    const updateMatchScore = await this.Api.patch(`/api/v1/matches/${payload.idMatch}`,
+    {
+      local_score : payload.local_score,
+      visitor_score : payload.visitor_score
+    },
+    {
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    })
+    return updateMatchScore.data
   }
   
 

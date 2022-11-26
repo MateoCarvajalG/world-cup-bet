@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from 'react'
 import {InputNumber,Modal, notification, Table } from 'antd';
 import { AuthContext } from '../context/AuthContext';
 import { showError } from '../alerts';
+import { Navigate } from 'react-router-dom';
 
 function Match(props:any) {
   const {auth,authDispatch} = useContext(AuthContext);
@@ -74,7 +75,7 @@ function Match(props:any) {
       }
       if(local_team.result === visiting_team.result && localScore === visitorScore ){
         console.log('entro a ganador empate')
-        sum += 3
+        sum += 5
       }
       if(local_team.result === localScore){
         sum += 2
@@ -130,6 +131,12 @@ function Match(props:any) {
                       
                     })
                   }).catch((err:any)=>{
+                    if(err.response.data.error.code===40102){
+                      <Navigate to="/auth/login" />
+                      authDispatch({
+                        type:"LOGOUT"
+                      })
+                    }
                     notification.error({
                       message: 'Error',
                       description:
@@ -165,6 +172,13 @@ function Match(props:any) {
                     payload
                   })
                 }).catch((err:any)=>{
+                  if(err.response.data.error.code===40102){
+                    <Navigate to="/auth/login" />                      
+                    console.log('entro')
+                    authDispatch({
+                      type:"LOGOUT"
+                    })
+                  }
                   notification.error({
                     message: 'Error',
                     description:

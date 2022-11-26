@@ -29,7 +29,7 @@ function UpdateResultsMatches(props:any) {
         min={0} 
         max={100000} 
         defaultValue={props.service.matches.find((match:any)=> match._id === text._id)?.local_team.result}
-        // disabled={new Date() > new Date(text.date)}
+        disabled={text.has_played}
         onChange={(ev:any)=>{
           if(actualId !== text._id){
             setPayload({idMatch:text._id,local_score:ev})
@@ -54,7 +54,7 @@ function UpdateResultsMatches(props:any) {
         min={0} 
         max={100000} 
         defaultValue={props.service.matches.find((match:any)=> match._id === text._id)?.visiting_team.result}
-        // disabled={new Date() > new Date(text.date)}
+        disabled={text.has_played}
         onChange={(ev:any)=>{
           if(actualId !== text._id){
             setPayload({idMatch:text._id,visitor_score:ev})
@@ -78,7 +78,7 @@ function UpdateResultsMatches(props:any) {
     {
       dataIndex: '',
       key: '',
-      render: (text:any) =><Button onClick={()=>updateScoreMatch(auth.token)} type="primary" disabled={!(text._id === payload.idMatch && payload.local_score && payload.visitor_score)} icon={<CheckCircleTwoTone />} size="small" />
+      render: (text:any) =><Button onClick={()=>updateScoreMatch(auth.token)} type="primary" disabled={!(text._id === payload.idMatch && payload.local_score >= 0 && payload.visitor_score>=0)} icon={<CheckCircleTwoTone />} size="small" />
     },
 ];
 

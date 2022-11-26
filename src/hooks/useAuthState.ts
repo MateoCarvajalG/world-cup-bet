@@ -51,6 +51,22 @@ const stateReducer = (state:IUserInfo, action:any) => {
       return {
        ...state
       };
+    case 'LOGOUT':
+      return {
+        token : null,
+        names : null,
+        document: null,
+        score : null,
+        selectedTeams: {
+          champion    : null,
+          runner_up   : null,
+          third_place : null,
+        },
+        matchesResults:undefined,
+        uid: null,
+        checking: true,
+        logged: false,
+      }
     default:
       return state;
   }

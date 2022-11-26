@@ -2,7 +2,8 @@
 const ERRORS:any = {
     40001: 'Usuario o contraseña invalido',
     40003: 'El usuario ya existe',
-    42301: 'El partido ya inicio y no es posible modificarlo'
+    42301: 'El partido ya inicio y no es posible modificarlo',
+    40102: 'Su sesion ha expirado, por favor vuelve a iniciar sesion'
 }
 
 function getErrorMessage(error:any) {

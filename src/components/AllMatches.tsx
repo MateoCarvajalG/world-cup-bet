@@ -1,6 +1,8 @@
-import { InputNumber, Table } from 'antd'
+import { InputNumber, notification, Table } from 'antd'
 import 'antd/dist/antd.css'
 import { useContext, useEffect, useState } from 'react'
+import { Navigate } from 'react-router-dom';
+import { showError } from '../alerts';
 import { AuthContext } from '../context/AuthContext';
 
 function AllMatches(props:any) {
@@ -29,10 +31,24 @@ function AllMatches(props:any) {
                     local_score: `${ev}`,
                     visitor_score:auth.matchesResults.find((match:any)=> match._id === text._id)?.visitor_score
                   }
-                  props.service.updateMatch(auth.token,auth.document,text._id,payload)
-                  authDispatch({
-                    type:"UPDATE_MATCH",
-                    payload
+                  props.service.updateMatch(auth.token,auth.document,text._id,payload).then((res:any)=>{
+                    authDispatch({
+                      type:"UPDATE_MATCH",
+                      payload
+                    })
+                  }).catch((err:any)=>{
+                    if(err.response.data.error.code===40102){
+                      <Navigate to="/auth/login" />                      
+                      console.log('entro')
+                      authDispatch({
+                        type:"LOGOUT"
+                      })
+                    }
+                    notification.error({
+                      message: 'Error',
+                      description:
+                        showError(err.response),
+                    });
                   })
                 }} 
               />
@@ -59,10 +75,24 @@ function AllMatches(props:any) {
                     visitor_score:`${ev}`
                   }
                   setLocalStore(ev)
-                  props.service.updateMatch(auth.token,auth.document,text._id,payload)
-                  authDispatch({
-                    type:"UPDATE_MATCH",
-                    payload
+                  props.service.updateMatch(auth.token,auth.document,text._id,payload).then((res:any)=>{
+                    authDispatch({
+                      type:"UPDATE_MATCH",
+                      payload
+                    })
+                  }).catch((err:any)=>{
+                    if(err.response.data.error.code===40102){
+                      <Navigate to="/auth/login" />                      
+                      console.log('entro')
+                      authDispatch({
+                        type:"LOGOUT"
+                      })
+                    }
+                    notification.error({
+                      message: 'Error',
+                      description:
+                        showError(err.response),
+                    });
                   })
                 }} 
             />
