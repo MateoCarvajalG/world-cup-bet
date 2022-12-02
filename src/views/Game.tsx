@@ -79,7 +79,11 @@ function Game() {
       { label: 'Actualizacion', key: 'updateResult', children: <div className='matches'> <UpdateResultsMatches service={service}/> </div> }]
       :
       [{ label: 'Fase de grupos', key: 'groups', children: <Tabs destroyInactiveTabPane={true} className='tabs-group' onChange={onChangeTabGroup} items={items}/> }, // remember to pass the key prop
-      { label: 'Fase Final', key: 'Finals', children: <FinalFase/>
+      { label: 'Fase Final', key: 'Finals', children: 
+      <FinalFase
+        matches={service.matches.filter((match:any) => match.group === "Round of 16" || match.group === "Quarter finals" || match.group === "Semi finals"  || match.group === "Third place" || match.group === "Final")}
+        service={service}
+      /> 
       },
       { label: 'Clasificacion', key: 'clasifieds', children: <Tabs className='tabs-group' onChange={onChangeRank} items={tabsRank}/>},]
       )  
