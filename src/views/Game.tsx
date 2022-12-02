@@ -11,6 +11,7 @@ import { AuthContext } from '../context/AuthContext';
 import AllMatches from '../components/AllMatches';
 import UsersRank from '../components/UsersRank';
 import UpdateResultsMatches from './UpdateResults';
+import FinalFase from '../components/FinalFase';
 
 const {Header} = Layout
 function Game() {
@@ -69,20 +70,16 @@ function Game() {
     ...(auth.document === "1053845913" || auth.document === "1053850398" ?
       [{ label: 'Fase de grupos', key: 'groups', children: <Tabs destroyInactiveTabPane={true} className='tabs-group' onChange={onChangeTabGroup} items={items}/> }, // remember to pass the key prop
       { label: 'Fase Final', key: 'Finals', children: 
-        <div className='in-develop'>
-          <h1>En desarrollo</h1>
-          <img src="https://media4.giphy.com/media/qgQUggAC3Pfv687qPC/giphy.gif" alt="" />
-        </div>  
+      <FinalFase
+        matches={service.matches.filter((match:any) => match.group === "Round of 16" || match.group === "Quarter finals" || match.group === "Semi finals"  || match.group === "Third place" || match.group === "Final")}
+        service={service}
+       /> 
       },
       { label: 'Clasificacion', key: 'clasifieds', children: <Tabs className='tabs-group' onChange={onChangeRank} items={tabsRank}/>},
       { label: 'Actualizacion', key: 'updateResult', children: <div className='matches'> <UpdateResultsMatches service={service}/> </div> }]
       :
       [{ label: 'Fase de grupos', key: 'groups', children: <Tabs destroyInactiveTabPane={true} className='tabs-group' onChange={onChangeTabGroup} items={items}/> }, // remember to pass the key prop
-      { label: 'Fase Final', key: 'Finals', children: 
-        <div className='in-develop'>
-          <h1>En desarrollo</h1>
-          <img src="https://media4.giphy.com/media/qgQUggAC3Pfv687qPC/giphy.gif" alt="" />
-        </div>  
+      { label: 'Fase Final', key: 'Finals', children: <FinalFase/>
       },
       { label: 'Clasificacion', key: 'clasifieds', children: <Tabs className='tabs-group' onChange={onChangeRank} items={tabsRank}/>},]
       )  

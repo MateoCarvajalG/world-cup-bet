@@ -196,6 +196,51 @@
 .in-develop img{
   width: 480px;
 }
+.Square{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  width: 100%;
+  overflow: auto;
+}
+.Square .fase{
+  width: 25%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  min-width: 350px;
+}
+.square-match{
+  width: 80%;
+  height: 130px;
+  background-color: #7d1030;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px 0 ;  
+}
+.square-match h5 {
+  color: rgb(135, 133, 133);
+  margin: 0;
+}
+.teams-finals{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+.square-match .team-square{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+}
+.team-square img{
+  width: 50px;
+}
 @media (max-width:650px) {
   .login {
     justify-content: center;
