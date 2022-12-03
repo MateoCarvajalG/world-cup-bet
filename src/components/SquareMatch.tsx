@@ -1,16 +1,60 @@
 import { useContext, useEffect, useState } from "react";
 import 'antd/dist/antd.css'
-import { InputNumber, notification } from "antd";
+import { InputNumber, Modal, notification, Table } from "antd";
 import { AuthContext } from "../context/AuthContext";
 import { Navigate } from "react-router-dom";
 import { showError } from "../alerts";
+import { url } from "inspector";
 
 function SquareMatch(props:any) {
   const {auth,authDispatch} = useContext(AuthContext);
   const [localScore, setLocalStore] = useState()
   const [visitorScore, setVisitorScore] = useState()
   const [resultMatch, setResultMatch] = useState<any>({});
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [usersResults,setUsersResults] = useState()
+  const columns = [
+    {
+      dataIndex: '',
+      key: 'names',
+      render: (text:any) => <h4>{text.user.names}</h4>
+    },
+    { 
+      dataIndex: 'local_score',
+      key: 'score',
+      render: (text:any) => 
+      <>
+        <h4>{props.match.local_team.name}</h4>
+        <h5>{text}</h5>
+      </>
+    },
+    { 
+      dataIndex: '',
+      key: '',
+      render: (text:any) => <h3>VS</h3>
+    },
+    { 
+      dataIndex: 'visitor_score',
+      key: 'score',
+      render: (text:any) => 
+      <>
+        <h4>{props.match.visiting_team.name}</h4>
+        <h5>{text}</h5>
+      </>
+    },
+  ];
 
+  const showModal = async () => {
+    setIsModalOpen(true);
+    const data = await props.service.getUsersResultsByMatchId(auth.token,props.match._id )
+    setUsersResults(data)
+  };
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
 
   useEffect( () => {
     setResultMatch(auth.matchesResults.find((match:any)=> match._id === props.match._id ))
@@ -23,15 +67,40 @@ function SquareMatch(props:any) {
   },[resultMatch])
   return (
     <>
-    <div className="square-match">
+    <div className="square-match" onClick={showModal}>
         <h5>{new Date(props.match.date).toLocaleString('es-CO',{weekday: "long",year: "numeric",month: "long",day: "numeric",hour: "numeric"})}</h5>
         <div className="teams-finals">
           <div className="team-square" >
-              { props.match.local_team.image ? 
+            { props.match.local_team.image ? 
+            <>
+              <img src={props.match.local_team.image} alt="" />
+              <p>{props.match.local_team.name}</p>
+            </>
+              :
+              "por definir" 
+            }
+          </div>
+          <h1> {props.match.local_team.result}-{props.match.visiting_team.result}</h1>
+          <div className="team-square">
+            {props.match.visiting_team.image ? 
               <>
-                <span>{props.match.local_team.name}</span>
-                <img src={props.match.local_team.image} alt="" />
-                  <InputNumber 
+                <img src={props.match.visiting_team.image} alt="" />
+                <p>{props.match.visiting_team.name}</p>
+              </>
+              :
+              "por definir"
+            }
+          </div>
+        </div>
+    </div>
+    {
+        isModalOpen && 
+        <Modal title="Detalle del partido" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+          <h1>Mi Resultado</h1>
+          <div className='modal-my-result' >
+            <img src={props.match.local_team.image} alt="" />
+            <span>{props.match.local_team.name}</span>
+            <InputNumber 
                     size="middle"
                     min={0} 
                     max={100000} 
@@ -67,18 +136,10 @@ function SquareMatch(props:any) {
                     }} 
                     
                   />
-              </>
-                :
-                "por definir"
-                
-              }
           </div>
-          <h1>-</h1>
-          <div className="team-square">
-            {props.match.visiting_team.image ? 
-            <>
-            <span>{props.match.visiting_team.name}</span>
+          <div  className='modal-my-result'>
             <img src={props.match.visiting_team.image} alt="" />
+            <span>{props.match.visiting_team.name}</span>
             <InputNumber 
               size="middle"
               min={0} 
@@ -114,15 +175,18 @@ function SquareMatch(props:any) {
                 })
               }}  
             />
-            </>
-            :
-            "por definir"
-            }
-            
           </div>
+          <h1>Resultados de los participantes</h1>
+          {
+            new Date > new Date(props.match.date) ? 
+              <Table columns={columns} dataSource={usersResults}  pagination={false}/>
+            : 
+              <h3>Una vez iniciado el encuentro, podras ver los resultados de los demas participantes</h3>
 
-        </div>
-    </div>
+          }
+
+        </Modal>
+      }
     </>
   );
 }
