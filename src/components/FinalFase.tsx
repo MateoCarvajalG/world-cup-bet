@@ -8,12 +8,14 @@ function FinalFase(props:any) {
   const [matchesQuarters,setMatchesQuarters]= useState([])
   const [matchesSemiFinals,setMatchesSemiFinals]= useState([])
   const [matchFinal,setMatchFinal]= useState([])
+  const [thirdPlaceMatch,setThirdPlaceMatch]=useState([])
 
   
   useEffect(()=>{
     setMatchesRound16(props.matches.filter((match:any)=>match.group === 'Round of 16'))
     setMatchesQuarters(props.matches.filter((match:any)=>match.group === 'Quarter finals'))
     setMatchesSemiFinals(props.matches.filter((match:any)=>match.group === 'Semi finals'))
+    setThirdPlaceMatch(props.matches.filter((match:any)=>match.group === 'Third place'))
     setMatchFinal(props.matches.filter((match:any)=>match.group === 'Final'))
   },[])
   return (
@@ -48,7 +50,15 @@ function FinalFase(props:any) {
             }
         </div>
         <div className="fase final">
-
+          {
+            thirdPlaceMatch.map((match:any)=>{
+              return(
+                <SquareMatch service={props.service} match={match}/>
+                )
+              })
+            }
+        </div>
+        <div className="fase final">
           <img src={worldCup} className="img-worldcup" />
           {
             matchFinal.map((match:any)=>{
